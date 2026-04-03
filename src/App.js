@@ -3,7 +3,10 @@ import BookCatalog from './components/BookCatalog';
 import Cart from './components/Cart';
 import NavBar from './components/NavBar';
 
+
 function App() {
+    const z = 5;
+
     const [cart, setCart] = useState([]);
     const [currentPage, setCurrentPage] = useState('catalog');
 
@@ -69,7 +72,6 @@ const styles = {
     }
 };
 
-// Добавьте глобальные стили
 const styleSheet = document.createElement("style");
 styleSheet.textContent = `
   button:hover {
