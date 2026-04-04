@@ -3,9 +3,10 @@ import BookCatalog from './components/BookCatalog';
 import Cart from './components/Cart';
 import NavBar from './components/NavBar';
 
-
+    
 function App() {
     const z = 5;
+    const z = 6;
 
     const [cart, setCart] = useState([]);
     const [currentPage, setCurrentPage] = useState('catalog');
