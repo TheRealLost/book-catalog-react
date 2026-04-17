@@ -11,8 +11,9 @@ const NavBar = ({ cartItemCount, currentPage, onPageChange }) => {
                         ...(currentPage === 'catalog' ? styles.activeNav : {})
                     }}
                 >
-                    Book Catalog
+                    Каталог книг
                 </button>
+
                 <button
                     onClick={() => onPageChange('cart')}
                     style={{
@@ -20,8 +21,20 @@ const NavBar = ({ cartItemCount, currentPage, onPageChange }) => {
                         ...(currentPage === 'cart' ? styles.activeNav : {})
                     }}
                 >
-                    Cart
-                    {cartItemCount > 0 && <span style={styles.cartBadge}>{cartItemCount}</span>}
+                    Корзина
+                    {cartItemCount > 0 && (
+                        <span style={styles.cartBadge}>{cartItemCount}</span>
+                    )}
+                </button>
+
+                <button
+                    onClick={() => onPageChange('finance')}
+                    style={{
+                        ...styles.navButton,
+                        ...(currentPage === 'finance' ? styles.activeNav : {})
+                    }}
+                >
+                    Финансы
                 </button>
             </div>
         </nav>
@@ -40,18 +53,18 @@ const styles = {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        gap: '1rem'
+        gap: '1rem',
+        flexWrap: 'wrap'
     },
     navButton: {
         backgroundColor: 'transparent',
         color: 'white',
         border: 'none',
         padding: '0.5rem 1rem',
-        fontSize: '1.2rem',
+        fontSize: '1.1rem',
         fontWeight: 'bold',
         borderRadius: '4px',
         cursor: 'pointer',
-        transition: 'background-color 0.3s',
         position: 'relative'
     },
     activeNav: {
