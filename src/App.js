@@ -4,14 +4,10 @@ import Cart from './components/Cart';
 import Summary from './components/Summary';
 
 function App() {
-    const [operations, setOperations] = useState([]);
-
-    useEffect(() => {
+    const [operations, setOperations] = useState(() => {
         const savedOperations = localStorage.getItem('operations');
-        if (savedOperations) {
-            setOperations(JSON.parse(savedOperations));
-        }
-    }, []);
+        return savedOperations ? JSON.parse(savedOperations) : [];
+    });
 
     useEffect(() => {
         localStorage.setItem('operations', JSON.stringify(operations));
