@@ -1,88 +1,140 @@
-import React, { useState } from 'react';
+import React from 'react';
+import FinanceForm from './FinanceForm';
+import Summary from './Summary';
 
-function FinanceForm({ onAdd }) {
-    const [type, setType] = useState('income');
-    const [category, setCategory] = useState('');
-    const [amount, setAmount] = useState('');
+const FinancePage = ({ operations, onAddOperation, onRemoveOperation }) => {
+    const totalIncome = operations
+        .filter((operation) => operation.type === 'income')
+        .reduce((sum, operation) => sum + operation.amount, 0);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const totalExpense = operations
+        .filter((operation) => operation.type === 'expense')
+        .reduce((sum, operation) => sum + operation.amount, 0);
 
-        if (!category.trim() || !amount) return;
-
-        const newOperation = {
-            id: Date.now(),
-            type,
-            category,
-            amount: Number(amount)
-        };
-
-        onAdd(newOperation);
-
-        setType('income');
-        setCategory('');
-        setAmount('');
-    };
+    const balance = totalIncome - totalExpense;
 
     return (
-        <form onSubmit={handleSubmit} style={styles.form}>
-            <select
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                style={styles.input}
-            >
-                <option value="income">Доход</option>
-                <option value="expense">Расход</option>
-            </select>
+        <div style={styles.container}>
+            <h1 style={styles.title}>Учёт личных финансов</h1>
 
-            <input
-                type="text"
-                placeholder="Категория"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                style={styles.input}
+            <FinanceForm onAdd={onAddOperation} />
+
+            <Summary
+                totalIncome={totalIncome}
+                totalExpense={totalExpense}
+                balance={balance}
             />
 
-            <input
-                type="number"
-                placeholder="Сумма"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                style={styles.input}
-            />
+            <div style={styles.listContainer}>
+                <h2>Список операций</h2>
 
-            <button type="submit" style={styles.button}>
-                Добавить
-            </button>
-        </form>
+                {operations.length === 0 ? (
+                    <p style={styles.emptyText}>Операций пока нет</p>
+                ) : (
+                    <div style={styles.list}>
+                        {operations.map((operation) => (
+                            <div key={operation.id} style={styles.card}>
+                                <div>
+                                    <h3 style={styles.type}>
+                                        {operation.type === 'income' ? 'Доход' : 'Расход'}
+                                    </h3>
+                                    <p style={styles.category}>
+                                        Категория: {operation.category}
+                                    </p>
+                                </div>
+
+                                <div style={styles.rightBlock}>
+                                    <div
+                                        style={{
+                                            ...styles.amount,
+                                            color: operation.type === 'income'
+                                                ? '#27ae60'
+                                                : '#e74c3c'
+                                        }}
+                                    >
+                                        {operation.type === 'income' ? '+' : '-'} {operation.amount} ₽
+                                    </div>
+
+                                    <button
+                                        style={styles.deleteBtn}
+                                        onClick={() => onRemoveOperation(operation.id)}
+                                    >
+                                        Удалить
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
     );
-}
+};
 
 const styles = {
-    form: {
-        display: 'flex',
-        gap: '10px',
-        flexWrap: 'wrap',
+    container: {
+        maxWidth: '1200px',
+        margin: '2rem auto',
+        padding: '0 2rem'
+    },
+    title: {
+        textAlign: 'center',
+        color: '#2c3e50',
+        marginBottom: '1.5rem'
+    },
+    listContainer: {
         backgroundColor: 'white',
-        padding: '20px',
         borderRadius: '8px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+        padding: '20px',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        marginTop: '20px'
     },
-    input: {
-        flex: '1',
-        minWidth: '160px',
-        padding: '10px',
-        borderRadius: '4px',
-        border: '1px solid #ccc'
+    emptyText: {
+        textAlign: 'center',
+        color: '#7f8c8d'
     },
-    button: {
-        backgroundColor: '#3498db',
+    list: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '12px',
+        marginTop: '15px'
+    },
+    card: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '15px',
+        borderRadius: '8px',
+        backgroundColor: '#f8f9fa',
+        border: '1px solid #e0e0e0',
+        flexWrap: 'wrap',
+        gap: '10px'
+    },
+    type: {
+        margin: '0 0 5px 0',
+        color: '#2c3e50'
+    },
+    category: {
+        margin: 0,
+        color: '#555'
+    },
+    rightBlock: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px'
+    },
+    amount: {
+        fontWeight: 'bold',
+        fontSize: '18px'
+    },
+    deleteBtn: {
+        backgroundColor: '#e74c3c',
         color: 'white',
         border: 'none',
-        padding: '10px 16px',
         borderRadius: '4px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        padding: '8px 12px'
     }
 };
 
-export default FinanceForm;
+export default FinancePage;
