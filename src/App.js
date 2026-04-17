@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FinanceForm from './components/FinanceForm';
 import Cart from './components/Cart';
 import Summary from './components/Summary';
 
 function App() {
     const [operations, setOperations] = useState([]);
+
+    useEffect(() => {
+        const savedOperations = localStorage.getItem('operations');
+        if (savedOperations) {
+            setOperations(JSON.parse(savedOperations));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('operations', JSON.stringify(operations));
+    }, [operations]);
 
     const addOperation = (operation) => {
         setOperations((prev) => [...prev, operation]);
