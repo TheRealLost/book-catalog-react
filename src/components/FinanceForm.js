@@ -60,21 +60,19 @@ function FinanceForm({ onAdd }) {
 
 const styles = {
     form: {
-        display: 'flex',
-        gap: '10px',
-        flexWrap: 'wrap',
-        backgroundColor: 'white',
-        padding: '20px',
-        borderRadius: '8px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-    },
-    input: {
-        flex: '1',
-        minWidth: '160px',
+
         padding: '10px',
         borderRadius: '4px',
         border: '1px solid #ccc'
     },
+
+    input: {
+        padding: '8px',
+        borderRadius: '4px',
+        border: '1px solid #ccc',
+        marginRight: '10px'
+    },
+
     button: {
         backgroundColor: '#3498db',
         color: 'white',
@@ -83,6 +81,8 @@ const styles = {
         borderRadius: '4px',
         cursor: 'pointer'
     }
+
+
 };
 
 export default FinanceForm;

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 const initialBooks = [
-    { id: 1, title: "Animal Farm", author: "George Orwell", price: 100 },
-    { id: 2, title: "Slaughterhouse-Five", author: "Kurt Vonnegut", price: 200 },
-    { id: 3, title: "The Old Man", author: "Ernest Hemingway", price: 300 }
+    { id: 1, title: "Animal Farm",         author: "George Orwell",    price: 100 },
+    { id: 2, title: "Slaughterhouse-Five", author: "Kurt Vonnegut",    price: 200 },
+    { id: 3, title: "The Old Man",         author: "Ernest Hemingway", price: 300 }
 ];
 
 const BookCatalog = ({ addToCart }) => {
